@@ -1,0 +1,4 @@
+﻿  SFML_Tutorial.cpp
+  main.cpp
+SFML_Tutorial.obj : error LNK2005: _main already defined in SFML_Tutorial.obj
+C:\Projects\SFML Tutorial\SFML_Tutorial\Release\SFML_Tutorial.exe : fatal error LNK1169: one or more multiply defined symbols found
