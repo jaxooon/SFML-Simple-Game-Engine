@@ -1,19 +1,29 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
+#include "Player.h"
 
 int main() 
 {
 	
-	sf::RenderWindow window(sf::VideoMode(512, 512), "SFML Tutorial", sf::Style::Close | sf::Style::Resize);
+	sf::RenderWindow window(sf::VideoMode(512, 512), "SFML Tutorial", sf::Style::Close);
 
-	//create a "player" and set its color to cyan
-	sf::RectangleShape player(sf::Vector2f(100, 100));
-	player.setFillColor(sf::Color::Cyan);
-	player.setOrigin(50.0f, 50.0f);
+	//create a "player"
+	
+	sf::Texture playerTexture; 
+	playerTexture.loadFromFile("tux_from_linux.png");
+
+
+	Player player(&playerTexture, sf::Vector2u(3, 9), 0.3f, 100.f);
+
+	sf::Vector2u textureSize = playerTexture.getSize();
+
+	float deltaTime = 0.0f;
+	sf::Clock clock;
 
 	//running while the window is open
 	while (window.isOpen()) 
 	{
+		deltaTime = clock.restart().asSeconds();
 
 		//create an sfml event
 		sf::Event evnt;
@@ -40,33 +50,10 @@ int main()
 			
 		}
 
-		//WASD controls
-	/*	if (sf::keyboard::iskeypressed(sf::keyboard::key::a))
-		{
-			player.move(-0.1f, 0.0f);
-		}
-		if (sf::keyboard::iskeypressed(sf::keyboard::key::d))
-		{
-			player.move(0.1f, 0.0f);
-		}
-		if (sf::keyboard::iskeypressed(sf::keyboard::key::w))
-		{
-			player.move(0.0f, -0.1f);
-		}
-		if (sf::keyboard::iskeypressed(sf::keyboard::key::s))
-		{
-			player.move(0.0f, 0.1f);
-		}*/
+		player.update(deltaTime);
 
-		//mouse controls
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-		{
-			sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-			player.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
-		}
-
-		window.clear();
-		window.draw(player);
+		window.clear(sf::Color(150, 150, 150));
+		player.Draw(window);
 		window.display();
 	}
 	return 0;
